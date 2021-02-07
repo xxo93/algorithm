@@ -16,7 +16,7 @@ def strDissipating(params_str=None):
     while len(ele_list) > 0:
         if len(res) == 0:
             res.append(ele_list.pop(0))
-        if len(res) > 0:
+        if len(res) > 0 and len(ele_list) > 0:
             if res[-1] == ele_list[0]:
                 res.pop()
                 ele_list.pop(0)
@@ -27,6 +27,9 @@ def strDissipating(params_str=None):
 
 
 if __name__ == '__main__':
+    a = "aaa"
+    print(strDissipating(a))
+
     a = 'ccabbacd'
     print(strDissipating(a))
 
