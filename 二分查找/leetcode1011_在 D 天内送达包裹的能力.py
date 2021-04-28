@@ -146,18 +146,54 @@ class Solution:
             # 否则运载能力降低，继续二分搜索
             else:
                 right = mid
-        print(left)
+
         return left
+    
+    
+    def shipWithinDays_new(self, weights: List[int], D: int) -> int:
+        # 确定左右边界: 运输一次的最小的运载能力的可能性区间
+        left, right = max(weights), sum(weights)
+        # 进行二分查找
+        while left < right:
+            # 获取中间的运载能力, 查找所需要的运载能力
+            mid = (left + right) >> 1
+            # 如果 need_day > D ，运载能力有待提高，left = mid
+            if self.can(mid, weights, D):
+                left = mid + 1
+            # 否则运载能力降低，继续二分搜索
+            else:
+                right = mid
+        return left
+
+    def can(self, mid, weights, D):
+        # need: 需要的天数；curr: 当前运载的货物
+        need_day, curr = 1, 0
+        for w in weights:
+            # 計算當前貨物重量
+            curr += w
+            # 当前货物重量大于运载能力，需要的天数+1。当前货物重量重置成下一天的第1件货物重量
+            if curr > mid:
+                need_day += 1
+                curr = w
+            if need_day > D:
+                return True  # 剪枝。如果 days > D (不符合要求) 就不用再继续计算
+        return False
 
 
 if __name__ == '__main__':
     obj = Solution()
 
     weights, D = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5
-    obj.shipWithinDays(weights, D)  # 15
+    print(obj.shipWithinDays(weights, D))  # 15
+    print(obj.shipWithinDays_new(weights, D))  # 15
+    print('***********************************')
 
     weights, D = [3, 2, 2, 4, 1, 4], 3
-    obj.shipWithinDays(weights, D)  # 6
+    print(obj.shipWithinDays(weights, D))  # 6
+    print(obj.shipWithinDays_new(weights, D))  # 6
+    print('***********************************')
 
     weights, D = [1, 2, 3, 1, 1], 4
-    obj.shipWithinDays(weights, D)  # 3
+    print(obj.shipWithinDays(weights, D))  # 3
+    print(obj.shipWithinDays_new(weights, D))  # 3
+    print('***********************************')
