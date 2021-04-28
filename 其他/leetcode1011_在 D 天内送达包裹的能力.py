@@ -128,20 +128,20 @@ class Solution:
         # 进行二分查找
         while left < right:
             # need: 需要的天数；curr: 当前运载的货物
-            need, curr = 1, 0
+            need_day, curr = 1, 0
             # 获取中间的运载能力, 查找所需要的运载能力
             mid = (left + right) >> 1
 
             for w in weights:
-                # 当前货物小于运载能力
-                if curr < mid:
-                    curr += w
-                # 否则天数加1
-                else:
-                    need += 1
+                # 計算當前貨物重量
+                curr += w
+                # 当前货物重量大于运载能力，需要的天数+1。当前货物重量重置成下一天的第1件货物重量
+                if curr > mid:
+                    need_day += 1
+                    curr = w
 
-            # 如果 need > D ，运载能力有待提高，left = mid
-            if need > D:
+            # 如果 need_day > D ，运载能力有待提高，left = mid
+            if need_day > D:
                 left = mid + 1
             # 否则运载能力降低，继续二分搜索
             else:
