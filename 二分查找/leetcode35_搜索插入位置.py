@@ -40,12 +40,15 @@ class Solution:
             mid = (left + right) >> 1
 
             # 条件
-            if nums[mid] < target:
+            if self.check(nums, mid, target):
                 left = mid + 1
             else:
                 right = mid
 
         return left
+
+    def check(self, nums, mid, target):
+        return True if nums[mid] < target else False
 
 
 if __name__ == '__main__':
