@@ -1,12 +1,15 @@
 """
-In a given grid, each cell can have one of three values:
+关键词：BFS 数组
+难度：中等
 
-the value 0 representing an empty cell;
-the value 1 representing a fresh orange;
-the value 2 representing a rotten orange.
-Every minute, any fresh orange that is adjacent (4-directionally) to a rotten orange becomes rotten.
+在给定的网格中，每个单元格可以有以下三个值之一：
 
-Return the minimum number of minutes that must elapse until no cell has a fresh orange.  If this is impossible, return -1 instead.
+值 0 代表空单元格；
+值 1 代表新鲜橘子；
+值 2 代表腐烂的橘子。
+每分钟，任何与腐烂的橘子（在 4 个正方向上）相邻的新鲜橘子都会腐烂。
+
+返回直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1。
 
 Example 1:
 
@@ -54,8 +57,7 @@ class Solution:
             for _ in range(queue_len):
                 i, j = queue.pop(0)  # 向前推出腐烂橘子的坐标
                 for x, y in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                    coo_i = i + x
-                    coo_j = j + y
+                    coo_i, coo_j = i + x, j + y
                     # 排除边界坐标和有新鲜橘子的坐标
                     if coo_i >= 0 and coo_j >= 0 and coo_i < row and coo_j < col and grid[coo_i][coo_j] == 1:
                         grid[coo_i][coo_j] = 2
